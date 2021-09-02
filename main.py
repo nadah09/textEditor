@@ -11,9 +11,14 @@ def edit_document(doc, txt):
     elif command == "MOVE":
         pos = int(txt.split(" ")[1])
         doc.move(pos)
-    elif command =="SELECT":
+    elif command == "SELECT":
         left, right = int(txt.split(" ")[1]), int(txt.split(" ")[2])
         doc.select(left, right)
+    elif command == "COPY":
+        doc.copy()
+    elif command == "PASTE":
+        doc.paste()
+
     return doc.text
 
 def setup_document(name):

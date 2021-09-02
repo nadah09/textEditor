@@ -7,6 +7,7 @@ class Document:
         self.history = []
         self.redoStack = []
         self.undoStack = []
+        self.copied = ""
     
     def append(self, txt):
         if self.right == 0 and self.left == 0:
@@ -38,7 +39,18 @@ class Document:
             self.cursor = 0
         else:
             self.cursor = min(pos, len(self.text))
+        self.left = 0
+        self.right = 0
     
     def select(self, left, right):
         self.left = max(0, left)
         self.right = min(right, len(self.text))
+    
+    def copy(self):
+        if self.left != self.right:
+            self.copied = self.text[self.left:self.right]
+
+    def paste(self):
+        if len(self.copied) > 0:
+            self.append(self.copied)
+
