@@ -9,15 +9,27 @@ class Document:
         self.undoStack = []
     
     def append(self, txt):
-        self.text = self.text[:self.cursor] + txt + self.text[self.cursor:]
-        self.cursor += len(txt)
+        if self.right == 0 and self.left == 0:
+            self.text = self.text[:self.cursor] + txt + self.text[self.cursor:]
+            self.cursor += len(txt)
+        else:
+            self.text = self.text[:self.left] + txt + self.text[self.right:]
+            self.cursor = self.left + len(txt)
+            self.left = 0
+            self.right = 0
         self.history.append(self.text)
         return self.text
     
     def backspace(self):
-        if self.cursor > 0:
+        if self.cursor > 0 and self.left == 0 and self.right == 0:
             self.text = self.text[:self.cursor-1] + self.text[self.cursor:]
             self.cursor -= 1
+            self.history.append(self.text)
+        else:
+            self.text = self.text[:self.left] + self.text[self.right:]
+            self.cursor = self.left
+            self.left = 0
+            self.right = 0
             self.history.append(self.text)
         return self.text
 
@@ -26,3 +38,7 @@ class Document:
             self.cursor = 0
         else:
             self.cursor = min(pos, len(self.text))
+    
+    def select(self, left, right):
+        self.left = max(0, left)
+        self.right = min(right, len(self.text))
