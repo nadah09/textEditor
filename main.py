@@ -29,11 +29,6 @@ def setup_document(name):
     doc = d.Document()
     return doc
 
-
-    
-
-
-
 if __name__=="__main__":
     doc = setup_document("doc1")
     docs = {}
@@ -47,7 +42,8 @@ if __name__=="__main__":
             name = txt.split(" ")[1]
             if name not in docs:
                 doc = setup_document(name)
-                docs[name] = doc   
+                docs[name] = doc  
+                print("Created " + name + "!") 
         if txt.split(" ")[0] == "SWITCH":
             name = txt.split(" ")[1]
             if name in docs:
