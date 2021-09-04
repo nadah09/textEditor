@@ -18,6 +18,10 @@ def edit_document(doc, txt):
         doc.copy()
     elif command == "PASTE":
         doc.paste()
+    elif command == "UNDO":
+        doc.undo()
+    elif command == "REDO":
+        doc.redo()
 
     return doc.text
 
